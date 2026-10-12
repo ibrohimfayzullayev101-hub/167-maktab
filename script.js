@@ -18,19 +18,38 @@ contactForm?.addEventListener("submit", (event) => {
   if (!contactForm.reportValidity()) return;
 
   const formData = new FormData(contactForm);
-  const subject = `[167-maktab] ${formData.get("subject")}`;
+  const name = String(formData.get("name") ?? "").trim();
+  const email = String(formData.get("email") ?? "").trim();
+  const subject = String(formData.get("subject") ?? "").trim();
+  const message = String(formData.get("message") ?? "").trim();
+
   const body = [
-    `Ism: ${formData.get("name")}`,
-    `Javob uchun email: ${formData.get("email")}`,
+    `Ism: ${name}`,
+    `Javob uchun email: ${email}`,
     "",
-    String(formData.get("message")),
+    message,
   ].join("\n");
+
   const gmailUrl = new URL("https://mail.google.com/mail/u/0/");
   gmailUrl.searchParams.set("view", "cm");
   gmailUrl.searchParams.set("fs", "1");
   gmailUrl.searchParams.set("to", "ibrohimfayzullayev101@gmail.com");
-  gmailUrl.searchParams.set("su", subject);
+  gmailUrl.searchParams.set("su", `[167-maktab] ${subject}`);
   gmailUrl.searchParams.set("body", body);
 
-  window.open(gmailUrl.toString(), "_blank", "noopener,noreferrer");
+  const mailtoUrl = new URL("mailto:ibrohimfayzullayev101@gmail.com");
+  mailtoUrl.searchParams.set("subject", `[167-maktab] ${subject}`);
+  mailtoUrl.searchParams.set("body", body);
+
+  const isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent) || window.matchMedia("(pointer: coarse)").matches;
+
+  if (isMobile) {
+    window.location.href = mailtoUrl.toString();
+    return;
+  }
+
+  const popup = window.open(gmailUrl.toString(), "_blank", "noopener,noreferrer");
+  if (!popup) {
+    window.location.href = mailtoUrl.toString();
+  }
 });
