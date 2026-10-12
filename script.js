@@ -30,16 +30,11 @@ contactForm?.addEventListener("submit", (event) => {
     message,
   ].join("\n");
 
-  const gmailUrl = new URL("https://mail.google.com/mail/u/0/");
-  gmailUrl.searchParams.set("view", "cm");
-  gmailUrl.searchParams.set("fs", "1");
-  gmailUrl.searchParams.set("to", "ibrohimfayzullayev101@gmail.com");
-  gmailUrl.searchParams.set("su", `[167-maktab] ${subject}`);
-  gmailUrl.searchParams.set("body", body);
+  const to = "ibrohimfayzullayev101@gmail.com";
+  const subjectText = `[167-maktab] ${subject}`;
 
-  const mailtoUrl = new URL("mailto:ibrohimfayzullayev101@gmail.com");
-  mailtoUrl.searchParams.set("subject", `[167-maktab] ${subject}`);
-  mailtoUrl.searchParams.set("body", body);
+  const gmailUrl = `https://mail.google.com/mail/u/0/?view=cm&fs=1&to=${encodeURIComponent(to)}&su=${encodeURIComponent(subjectText)}&body=${encodeURIComponent(body)}`;
+  const mailtoUrl = `mailto:${to}?subject=${encodeURIComponent(subjectText)}&body=${encodeURIComponent(body)}`;
 
   const isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent) || window.matchMedia("(pointer: coarse)").matches;
 
