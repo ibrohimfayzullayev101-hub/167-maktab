@@ -25,7 +25,7 @@ contactForm?.addEventListener("submit", (event) => {
     "",
     String(formData.get("message")),
   ].join("\n");
-  const gmailUrl = new URL("https://mail.google.com/mail/");
+  const gmailUrl = new URL("https://mail.google.com/mail/u/0/");
   gmailUrl.searchParams.set("view", "cm");
   gmailUrl.searchParams.set("fs", "1");
   gmailUrl.searchParams.set("to", "ibrohimfayzullayev101@gmail.com");
